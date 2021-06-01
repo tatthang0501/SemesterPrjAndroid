@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -248,7 +249,6 @@ public class MoneyFragment extends Fragment {
                             listFilter.add(mi);
                         }
                     }
-                    listMoney = listFilter;
                     adapter.setListMoney(listFilter);
                     rev.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -261,13 +261,279 @@ public class MoneyFragment extends Fragment {
         btnViewStatic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Thống kế theo dữ liệu thổng hợp thu + chi
                 if(spMoneyType.getSelectedItem().toString().equals("Tổng hợp") && spTimeType.getSelectedItem().toString().equals("Theo ngày")){
-                    Intent intent = new Intent(getContext(), StaticMoney.class);
-                    intent.putExtra("money", (Serializable) listMoney);
-                    startActivity(intent);
-                }
-                if(spMoneyType.getSelectedItem().toString().equals("Tổng hợp") && spTimeType.getSelectedItem().toString().equals("Theo tuần")){
+                    List<Money> listMoneySend = new ArrayList<>();
+                    try{
+                    Calendar curDate = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String tempDate = dateFormat.format(curDate.getTime());
+                    String curDateString = "";
+                    if(tempDate.charAt(0) == '0'){
+                        for(int i = 1; i < tempDate.length(); i++){
+                            curDateString+=tempDate.charAt(i);
+                        }
+                    }
+                    else{
+                        curDateString = tempDate;
+                    }
+                        System.out.println(curDateString);
+                    for(Money m : listMoney) {
+                        Date temp = dateFormat.parse(m.getDate());
+                        System.out.println("MoneyDate dayyyy " + temp);
+                        if (m.getDate().equals(curDateString)) {
+                            listMoneySend.add(m);
+                            }
+                        }
+                        System.out.println("List size dayyyy bro buh "+ listMoneySend.size());
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoney);
+                        startActivity(intent);
+                    }
+                    catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
+                }
+                else if(spMoneyType.getSelectedItem().toString().equals("Tổng hợp") && spTimeType.getSelectedItem().toString().equals("Theo tuần")){
+                    Calendar curDate = Calendar.getInstance();
+                    curDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateF = null;
+                    Date dateT = null;
+                    try {
+                        dateF = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        for(int i = 0; i <= 6; i++){
+                            curDate.add(Calendar.DATE, 1);
+                        }
+                        dateT = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                    || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                listMoneySend.add(m);
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                else if(spMoneyType.getSelectedItem().toString().equals("Tổng hợp") && spTimeType.getSelectedItem().toString().equals("Theo tháng")){
+
+                    try {
+                        Calendar c = Calendar.getInstance();
+                        String date = c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        c.setTime(dateFormat.parse(date));
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        Date dateT = c.getTime();
+                        System.out.println(dateT);
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+                        Date dateF = c.getTime();
+                        System.out.println(dateF);
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                    || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                listMoneySend.add(m);
+                            }
+                        }
+                        Toast.makeText(getContext(), "Listsize day " + listMoneySend.size(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //Thống kê theo dữ liệu chi
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền chi") && spTimeType.getSelectedItem().toString().equals("Theo ngày")){
+                    List<Money> listMoneySend = new ArrayList<>();
+                    try{
+                        Calendar curDate = Calendar.getInstance();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String tempDate = dateFormat.format(curDate.getTime());
+                        String curDateString = "";
+                        if(tempDate.charAt(0) == '0'){
+                            for(int i = 1; i < tempDate.length(); i++){
+                                curDateString+=tempDate.charAt(i);
+                            }
+                        }
+                        else{
+                            curDateString = tempDate;
+                        }
+                        for(Money m : listMoney) {
+                            Date temp = dateFormat.parse(m.getDate());
+                            if (m.getDate().equals(curDateString) && m.getType().equals("Tiền chi")) {
+                                listMoneySend.add(m);
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoney);
+                        startActivity(intent);
+                    }
+                    catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền chi") && spTimeType.getSelectedItem().toString().equals("Theo tuần")){
+                    Calendar curDate = Calendar.getInstance();
+                    curDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateF = null;
+                    Date dateT = null;
+                    try {
+                        dateF = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        for(int i = 0; i <= 6; i++){
+                            curDate.add(Calendar.DATE, 1);
+                        }
+                        dateT = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if(m.getType() == "Tiền chi"){
+                                if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                        || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                    listMoneySend.add(m);
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền chi") && spTimeType.getSelectedItem().toString().equals("Theo tháng")){
+
+                    try {
+                        Calendar c = Calendar.getInstance();
+                        String date = c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        c.setTime(dateFormat.parse(date));
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        Date dateT = c.getTime();
+                        System.out.println(dateT);
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+                        Date dateF = c.getTime();
+                        System.out.println(dateF);
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if(m.getType().equals("Tiền chi")){
+                                if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                        || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                    listMoneySend.add(m);
+                                }
+                            }
+                        }
+                        Toast.makeText(getContext(), "Listsize day " + listMoneySend.size(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //Thống kê dữ liệu thu
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền thu") && spTimeType.getSelectedItem().toString().equals("Theo ngày")){
+                    List<Money> listMoneySend = new ArrayList<>();
+                    try{
+                        Calendar curDate = Calendar.getInstance();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String tempDate = dateFormat.format(curDate.getTime());
+                        String curDateString = "";
+                        if(tempDate.charAt(0) == '0'){
+                            for(int i = 1; i < tempDate.length(); i++){
+                                curDateString+=tempDate.charAt(i);
+                            }
+                        }
+                        else{
+                            curDateString = tempDate;
+                        }
+                        for(Money m : listMoney) {
+                            Date temp = dateFormat.parse(m.getDate());
+                            if (m.getDate().equals(curDateString) && m.getType().equals("Tiền thu")) {
+                                listMoneySend.add(m);
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoney);
+                        startActivity(intent);
+                    }
+                    catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền thu") && spTimeType.getSelectedItem().toString().equals("Theo tuần")){
+                    Calendar curDate = Calendar.getInstance();
+                    curDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateF = null;
+                    Date dateT = null;
+                    try {
+                        dateF = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        for(int i = 0; i <= 6; i++){
+                            curDate.add(Calendar.DATE, 1);
+                        }
+                        dateT = dateFormat.parse(dateFormat.format(curDate.getTime()));
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if(m.getType() == "Tiền thu"){
+                                if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                        || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                    listMoneySend.add(m);
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                else if(spMoneyType.getSelectedItem().toString().equals("Tiền thu") && spTimeType.getSelectedItem().toString().equals("Theo tháng")){
+
+                    try {
+                        Calendar c = Calendar.getInstance();
+                        String date = c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        c.setTime(dateFormat.parse(date));
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        Date dateT = c.getTime();
+                        System.out.println(dateT);
+                        c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+                        Date dateF = c.getTime();
+                        System.out.println(dateF);
+                        List<Money> listMoneySend = new ArrayList<>();
+                        for(Money m : listMoney){
+                            Date temp = dateFormat.parse(m.getDate());
+                            if(m.getType().equals("Tiền thu")){
+                                if((temp.after(dateF) && temp.before(dateT)) || (temp.after(dateF) && temp.equals(dateT))
+                                        || (temp.equals(dateF) && temp.equals(dateT)) || (temp.equals(dateF) && temp.before(dateT))){
+                                    listMoneySend.add(m);
+                                }
+                            }
+                        }
+                        Toast.makeText(getContext(), "Listsize day " + listMoneySend.size(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), StaticMoney.class);
+                        intent.putExtra("money", (Serializable) listMoneySend);
+                        startActivity(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

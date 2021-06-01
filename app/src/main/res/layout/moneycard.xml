@@ -33,7 +33,7 @@
             android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="20/05/2021"/>
+            android:text="20/5/2021"/>
 
         <TextView
             android:text="-"
