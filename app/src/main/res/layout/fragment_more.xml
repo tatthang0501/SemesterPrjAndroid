@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MoreFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/layout_background_borderradius"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <TextView
+                android:text="THÔNG TIN SẢN PHẨM"
+                android:textSize="30dp"
+                android:textAlignment="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="ỨNG DỤNG QUẢN LÝ THU CHI"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textSize="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="PHIÊN BẢN 1.0"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textSize="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/imgCat"
+                    android:src="@mipmap/ic_launcher_round"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"/>
+                <LinearLayout
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="Nguyễn Tất Thắng"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:textSize="28dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text="B17DCCN563"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:textSize="26dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvMoreEmail"
+                android:text="Đang đăng nhập: abc@gmail.com"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btnLogout"
+                android:text="Đăng xuất"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

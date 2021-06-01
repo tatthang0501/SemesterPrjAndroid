@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SemesterProject NguyenTatThangB17DCCN563</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="incomeOpt">
+        <item>Tiền lương</item>
+        <item>Tiền thường</item>
+        <item>Tiền trợ cấp</item>
+        <item>Thu nhập phụ</item>
+        <item>Thu nhập tạm thời</item>
+    </string-array>
+    <string-array name="spendingOpt">
+        <item>Ăn uống</item>
+        <item>Chi tiêu hàng ngày</item>
+        <item>Quần áo</item>
+        <item>Mỹ phẩm</item>
+        <item>Phí giao lưu</item>
+        <item>Y tế</item>
+        <item>Giáo dục</item>
+        <item>Tiền điện nước</item>
+        <item>Đi lại</item>
+        <item>Phí liên lạc</item>
+        <item>Tiền nhà</item>
+        <item>Tiền cho vay</item>
+    </string-array>
+    <string-array name="moneyType">
+        <item>Tiền thu</item>
+        <item>Tiền chi</item>
+    </string-array>
+    <string-array name="timeType">
+        <item>Theo ngày</item>
+        <item>Theo tuần</item>
+        <item>Theo tháng</item>
+    </string-array>
+    <string-array name="moneyTypeContainAll">
+        <item>Tổng hợp</item>
+        <item>Tiền thu</item>
+        <item>Tiền chi</item>
+    </string-array>
+</resources>

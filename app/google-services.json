@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "710874846354",
+    "firebase_url": "https://semester-project-81bbc-default-rtdb.firebaseio.com",
+    "project_id": "semester-project-81bbc",
+    "storage_bucket": "semester-project-81bbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710874846354:android:7fdcb147604d24c63a824b",
+        "android_client_info": {
+          "package_name": "com.example.semesterprojectnguyentatthangb17dccn563"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710874846354-7jsnfmfaorcro4bsve6teujmvum48mai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0LixyP6WrLl50jLBzRAY9qd-HAMgjydE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710874846354-7jsnfmfaorcro4bsve6teujmvum48mai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

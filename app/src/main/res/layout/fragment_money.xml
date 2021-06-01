@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MoneyFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@drawable/layout_background_borderradius"
+        android:layout_height="200dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/titlepage"
+                    android:layout_marginTop="20dp"
+                    android:textSize="28sp"
+                    android:textColor="#ffffff"
+                    android:text="DANH SÁCH THU CHI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/totalMoney"
+                    android:textSize="18sp"
+                    android:textColor="#ffffff"
+                    android:layout_marginTop="3dp"
+                    android:text="Tổng tiền hiện tại: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Lọc theo ngày"
+                    android:textSize="18sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="55dp"
+                android:src="@drawable/ic_baseline_add_24">
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="4"
+            android:layout_marginLeft="15dp"
+            android:layout_height="50dp">
+            <Button
+                android:id="@+id/btnGetDateFromMoney"
+                android:layout_width="60dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Từ" />
+            <TextView
+                android:id="@+id/tvDateFromMoney"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#ffffff"
+                android:text="11/05/2021"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/btnGetDateToMoney"
+                android:layout_width="70dp"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:text="Đến" />
+            <TextView
+                android:id="@+id/tvDateToMoney"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="11/05/2021"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="-10dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnMoneyFilter"
+                android:text="Tìm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"/>
+            <Button
+                android:id="@+id/btnMoneyGetAll"
+                android:layout_marginLeft="20dp"
+                android:text="Xem tất cả"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/revMoney"
+        android:layout_width="match_parent"
+        android:layout_marginTop="210dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_height="300dp">
+    </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:background="@drawable/layout_background_borderradius"
+        android:layout_width="match_parent"
+        android:layout_gravity="center|bottom"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/spMoneyTypeStatic"
+                android:layout_marginLeft="30dp"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:entries="@array/moneyTypeContainAll"
+                android:layout_gravity="left"
+                android:layout_width="450px"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="22dp"
+                android:text=" / "
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spTimeTypeStatic"
+                android:entries="@array/timeType"
+                android:layout_gravity="right"
+                android:textColor="#ffffff"
+                android:textAlignment="center"
+                android:layout_width="450px"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnMoneyViewStatic"
+                android:text="Xem thống kê"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btnMoneySendEmail"
+                android:text="Gửi thống kê qua email"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
