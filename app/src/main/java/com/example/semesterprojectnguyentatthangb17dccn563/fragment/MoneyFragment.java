@@ -959,13 +959,31 @@ public class MoneyFragment extends Fragment {
                     String email = user.getEmail();
                     MailSender sender = new MailSender();
                     sender.sendMail("Báo cáo"+ staticType, attachment, sender.getUser(), email);
+                    createSentToast();
 
                 } catch (Exception e) {
+                    createFailedToast();
                     Log.e("Sending email process", e.getMessage(), e);
                 }
             }
 
         }).start();
+    }
+    private void createSentToast(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext() , "Gửi báo cáo qua email thành công!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void createFailedToast(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), "Gửi báo cáo không thành công!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     @Override
     public void onResume() {
