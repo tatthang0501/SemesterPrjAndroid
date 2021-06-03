@@ -36,15 +36,16 @@ public class RegisterActivity extends AppCompatActivity {
                     rgEmail.setError("Email's not true");
                     return;
                 }
-                if(rgEmail.getText().toString().length()==0){
+                else if(rgEmail.getText().toString().length()==0){
                     rgEmail.setError("Email is blank");
                     return;
                 }
-                if(rgPassword.getText().toString().length() < 8){
+                else if(rgPassword.getText().toString().length() < 8){
                     rgPassword.setError("Password must be more than 8 characters");
                     return;
                 }
-                if(rgCfPassword.getText().toString() != rgPassword.getText().toString()){
+                else if(!rgCfPassword.getText().toString().equals(rgPassword.getText().toString())){
+                    System.out.println(rgCfPassword + " confirm " + rgPassword);
                     rgCfPassword.setError("Confirm password not match");
                     return;
                 }
