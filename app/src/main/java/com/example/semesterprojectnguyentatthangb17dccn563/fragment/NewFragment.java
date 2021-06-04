@@ -94,6 +94,8 @@ public class NewFragment extends Fragment {
     public void loadArticle(){
         if(page == 1) backBtn.setEnabled(false);
         else backBtn.setEnabled(true);
+        if(page == 56) nextBtn.setEnabled(false);
+        else nextBtn.setEnabled(true);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

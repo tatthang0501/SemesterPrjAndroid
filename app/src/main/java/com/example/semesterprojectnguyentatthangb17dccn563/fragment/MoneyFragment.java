@@ -23,7 +23,7 @@ import com.example.semesterprojectnguyentatthangb17dccn563.R;
 import com.example.semesterprojectnguyentatthangb17dccn563.activity.AddActivityMoney;
 import com.example.semesterprojectnguyentatthangb17dccn563.activity.StaticMoney;
 import com.example.semesterprojectnguyentatthangb17dccn563.adapter.RecyclerMoneyAdapter;
-import com.example.semesterprojectnguyentatthangb17dccn563.model.MailSender;
+import com.example.semesterprojectnguyentatthangb17dccn563.mailSender.MailSender;
 import com.example.semesterprojectnguyentatthangb17dccn563.model.Money;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,11 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,7 +131,10 @@ public class MoneyFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listMoney = new ArrayList<Money>();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String email = user.getEmail();
+                String email = "";
+                if(user != null){
+                    email = user.getEmail();
+                }
                 float total = 0;
                 for(DataSnapshot item : snapshot.getChildren()){
                     if(item.child("email").getValue().toString().equals(email)){

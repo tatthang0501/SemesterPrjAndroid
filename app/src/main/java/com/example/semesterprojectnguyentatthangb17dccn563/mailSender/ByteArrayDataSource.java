@@ -1,4 +1,4 @@
-package com.example.semesterprojectnguyentatthangb17dccn563.model;
+package com.example.semesterprojectnguyentatthangb17dccn563.mailSender;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

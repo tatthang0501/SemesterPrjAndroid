@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.semesterprojectnguyentatthangb17dccn563.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister;
     private EditText email, password;
     protected FirebaseAuth authentication;
+    private SignInButton googleSignInBtn;
+    private GoogleSignInClient mGoogleSignInClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         authentication = FirebaseAuth.getInstance();
         init();
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -85,5 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnSignUp);
         email = findViewById(R.id.emailLoginText);
         password = findViewById(R.id.passwordLoginText);
+        googleSignInBtn = findViewById(R.id.btnSignInGoogle);
+        googleSignInBtn.setSize(SignInButton.SIZE_STANDARD);
     }
 }

@@ -1,9 +1,8 @@
-package com.example.semesterprojectnguyentatthangb17dccn563.model;
+package com.example.semesterprojectnguyentatthangb17dccn563.mailSender;
 
 import java.security.Security;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -41,20 +40,14 @@ public class MailSender extends Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, Multipart attachment, String sender, String recipients) throws Exception {
+    public synchronized void sendMail(String subject, Multipart attachment, String sender, String recipient) throws Exception {
         MimeMessage message = new MimeMessage(session);
-//        DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/html"));
         message.setSender(new InternetAddress(sender));
         message.setSubject(subject);
-//        message.setDataHandler(handler);
         if(attachment != null){
             message.setContent(attachment);
         }
-
-        if (recipients.indexOf(',') > 0)
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-        else
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
         Transport.send(message);
     }

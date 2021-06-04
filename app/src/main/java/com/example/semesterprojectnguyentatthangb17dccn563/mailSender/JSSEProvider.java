@@ -1,4 +1,4 @@
-package com.example.semesterprojectnguyentatthangb17dccn563.model;
+package com.example.semesterprojectnguyentatthangb17dccn563.mailSender;
 
 import java.security.AccessController;
 import java.security.Provider;

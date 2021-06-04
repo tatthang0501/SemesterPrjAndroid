@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.semesterprojectnguyentatthangb17dccn563.R;
 import com.example.semesterprojectnguyentatthangb17dccn563.activity.LoginActivity;
 import com.example.semesterprojectnguyentatthangb17dccn563.activity.MainActivity;
+import com.example.semesterprojectnguyentatthangb17dccn563.activity.MonthlyCompareActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -28,6 +29,7 @@ public class MoreFragment extends Fragment {
     private Button btnLogout;
     private TextView tvMoreEmail;
     protected FirebaseAuth authentication;
+    private Button btnCompareAct;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,7 +78,18 @@ public class MoreFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_more, container, false);
         btnLogout = v.findViewById(R.id.btnLogout);
         tvMoreEmail = v.findViewById(R.id.tvMoreEmail);
+        btnCompareAct = v.findViewById(R.id.btnCreateStaticBarChart);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        btnCompareAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user != null) {
+                    Intent intent = new Intent(getContext(), MonthlyCompareActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
