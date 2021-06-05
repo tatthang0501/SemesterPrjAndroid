@@ -1,9 +1,12 @@
 package com.example.semesterprojectnguyentatthangb17dccn563.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -12,9 +15,11 @@ import com.example.semesterprojectnguyentatthangb17dccn563.model.Money;
 import com.example.semesterprojectnguyentatthangb17dccn563.model.MonthlyMoney;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,58 +43,104 @@ public class MonthlyCompareActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
     private List<Money> listMoney;
-    private ArrayList<String> lableNames;
+    private ArrayList<String> lableMonth;
     private ArrayList<BarEntry> barEntryArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monthly_compare);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         init();
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("money");
-        ArrayList<MonthlyMoney> listMonthlyMoney = new ArrayList<>();
-        for(int i = 1; i <= 12; i++){
-            MonthlyMoney mm = new MonthlyMoney();
-            mm.setMoney(10000);
-            mm.setMonth("T" + i);
-            listMonthlyMoney.add(mm);
-        }
-
         readData(new FirebaseCallback() {
             @Override
             public void onCallBack(List<Money> listMoney) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                ArrayList<String> listYearAL = new ArrayList<>();
                 for(Money m : listMoney){
                     try {
-                        Date moneyDate = dateFormat.parse(m.getDate());
-                        int temp = moneyDate.getMonth() + 1;
-                        MonthlyMoney mm = listMonthlyMoney.get(temp-1);
-                        mm.setMoney(mm.getMoney() + Float.parseFloat(m.getMoney()));
-                        listMonthlyMoney.set(temp-1, mm);
+                        Date temp = dateFormat.parse(m.getDate());
+                        String year = Integer.toString((temp.getYear() + 1900));
+                        if(!listYearAL.contains(year)) listYearAL.add(year);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                }
-                lableNames = new ArrayList<>();
-                barEntryArrayList = new ArrayList<>();
-                for (MonthlyMoney mm : listMonthlyMoney){
-                    String month = mm.getMonth();
-                    float sales = mm.getMoney();
-                    System.out.println(month +": " + sales);
-                    barEntryArrayList.add(new BarEntry(listMonthlyMoney.indexOf(mm),sales));
-                    lableNames.add(month);
-                }
-                BarDataSet barDataSet = new BarDataSet(barEntryArrayList,"Tiền chi theo từng tháng");
-                barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                Description description = new Description();
-                description.setText("Tháng");
-                compareChart.setDescription(description);
-                BarData barData = new BarData(barDataSet);
-                compareChart.setData(barData);
 
-                compareChart.animateY(2000);
-                compareChart.invalidate();
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MonthlyCompareActivity.this, android.R.layout.simple_spinner_item, listYearAL);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spCompareYear.setAdapter(adapter);
+            }
+        });
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readData(new FirebaseCallback() {
+                    @Override
+                    public void onCallBack(List<Money> listMoney) {
+                        ArrayList<MonthlyMoney> listMonthlyMoney = new ArrayList<>();
+                        ArrayList<Money> listChart = new ArrayList<>();
+                        String type = spCompareType.getSelectedItem().toString();
+                        int year = Integer.parseInt(spCompareYear.getSelectedItem().toString());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        for(Money m : listMoney){
+                            try {
+                                Date temp = dateFormat.parse(m.getDate());
+                                if(temp.getYear()+1900 == year && m.getType().equals(type)) listChart.add(m);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        for(int i = 1; i <= 12; i++){
+                            MonthlyMoney mm = new MonthlyMoney();
+                            mm.setMoney(0);
+                            mm.setMonth("T" + i);
+                            listMonthlyMoney.add(mm);
+                        }
+                        for(Money m : listChart){
+                            try {
+                                Date moneyDate = dateFormat.parse(m.getDate());
+                                int temp = moneyDate.getMonth() + 1;
+                                MonthlyMoney mm = listMonthlyMoney.get(temp-1);
+                                mm.setMoney(mm.getMoney() + Float.parseFloat(m.getMoney()));
+                                listMonthlyMoney.set(temp-1, mm);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        lableMonth = new ArrayList<>();
+                        barEntryArrayList = new ArrayList<>();
+                        for (MonthlyMoney mm : listMonthlyMoney){
+                            String month = mm.getMonth();
+                            float money = mm.getMoney();
+                            barEntryArrayList.add(new BarEntry(listMonthlyMoney.indexOf(mm),money));
+                            lableMonth.add(month);
+                        }
+                        BarDataSet barDataSet = new BarDataSet(barEntryArrayList,type +" theo từng tháng");
+                        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                        Description description = new Description();
+                        description.setText("Tháng");
+                        compareChart.setDescription(description);
+                        BarData barData = new BarData(barDataSet);
+                        barData.setValueTextSize(13);
+                        barData.setBarWidth((float) 0.8);
+                        compareChart.setData(barData);
+                        XAxis xAxis = compareChart.getXAxis();
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(lableMonth));
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setDrawGridLines(false);
+                        xAxis.setDrawAxisLine(false);
+                        xAxis.setGranularity(1f);
+                        xAxis.setTextSize(13);
+                        xAxis.setLabelCount(lableMonth.size());
+                        xAxis.setLabelRotationAngle(0);
+                        compareChart.animateY(2000);
+                        compareChart.invalidate();
+                    }
+                });
             }
         });
 
@@ -110,19 +161,13 @@ public class MonthlyCompareActivity extends AppCompatActivity {
                 if(user != null){
                     email = user.getEmail();
                 }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                for(DataSnapshot item : snapshot.getChildren()){
-                    if(item.child("email").getValue().toString().equals(email)){
-                        Money money = item.getValue(Money.class);
-                        try {
-                            Date moneyDate = dateFormat.parse(money.getDate());
-                            int temp = moneyDate.getYear() + 1900;
-                            if(temp == 2021) listMoney.add(money);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                        for(DataSnapshot item : snapshot.getChildren()){
+                            if(item.child("email").getValue().toString().equals(email)){
+                                Money money = item.getValue(Money.class);
+                                listMoney.add(money);
+
+                                }
+                            }
                 firebaseCallback.onCallBack(listMoney);
             }
 
