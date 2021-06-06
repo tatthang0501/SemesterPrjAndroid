@@ -37,4 +37,7 @@
         <item>Tiền thu</item>
         <item>Tiền chi</item>
     </string-array>
+    <string-array name="spCompareYear">
+        <item>2030</item>
+    </string-array>
 </resources>

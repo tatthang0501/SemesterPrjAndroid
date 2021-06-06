@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MonthlyCompareActivity extends AppCompatActivity {
     private Spinner spCompareType, spCompareYear;
-    private Button btnCreate;
+    private Button btnCreate, btnBack;
     private BarChart compareChart;
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
@@ -73,6 +73,12 @@ public class MonthlyCompareActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MonthlyCompareActivity.this, android.R.layout.simple_spinner_item, listYearAL);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spCompareYear.setAdapter(adapter);
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +156,7 @@ public class MonthlyCompareActivity extends AppCompatActivity {
         spCompareYear = findViewById(R.id.spCompareYear);
         btnCreate = findViewById(R.id.btnCreateCompare);
         compareChart = findViewById(R.id.compareBarChart);
+        btnBack = findViewById(R.id.btnCompareBack);
     }
     private void readData(FirebaseCallback firebaseCallback){
         databaseReference.addValueEventListener(new ValueEventListener() {

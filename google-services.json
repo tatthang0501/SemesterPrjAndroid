@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "710874846354",
+    "firebase_url": "https://semester-project-81bbc-default-rtdb.firebaseio.com",
     "project_id": "semester-project-81bbc",
     "storage_bucket": "semester-project-81bbc.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "710874846354-b4e0po88k88d36c5jf5ssim0bbrobogi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.semesterprojectnguyentatthangb17dccn563",
+            "certificate_hash": "31d11ff3bd19325c817b8d65feb0c85797092fec"
+          }
+        },
         {
           "client_id": "710874846354-7jsnfmfaorcro4bsve6teujmvum48mai.apps.googleusercontent.com",
           "client_type": 3
