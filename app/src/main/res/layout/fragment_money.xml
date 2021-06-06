@@ -35,7 +35,7 @@
                     android:textSize="18sp"
                     android:textColor="#ffffff"
                     android:layout_marginTop="3dp"
-                    android:text="Tổng tiền hiện tại: "
+                    android:text="Số dư: "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

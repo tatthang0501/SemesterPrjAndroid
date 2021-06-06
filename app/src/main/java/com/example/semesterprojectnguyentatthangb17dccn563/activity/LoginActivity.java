@@ -50,12 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         authentication = FirebaseAuth.getInstance();
         init();
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +92,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

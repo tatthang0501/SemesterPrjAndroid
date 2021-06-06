@@ -147,7 +147,7 @@ public class MoneyFragment extends Fragment {
 
                     }
                 }
-                totalMoney.setText("Tổng tiền: " + total);
+                totalMoney.setText("Số dư: " + total);
                 adapter.setListMoney(listMoney);
                 rev.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
@@ -182,7 +182,7 @@ public class MoneyFragment extends Fragment {
 
                             }
                         }
-                        totalMoney.setText("Tổng tiền đã thu: " + total);
+                        totalMoney.setText("Số dư: " + total);
                         adapter.setListMoney(listMoney);
                         rev.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
@@ -287,12 +287,12 @@ public class MoneyFragment extends Fragment {
                         System.out.println(curDateString);
                     for(Money m : listMoney) {
                         Date temp = dateFormat.parse(m.getDate());
-                        System.out.println("MoneyDate dayyyy " + temp);
+                        System.out.println("MoneyDate " + temp);
                         if (m.getDate().equals(curDateString)) {
                             listMoneySend.add(m);
                             }
                         }
-                        System.out.println("List size dayyyy bro buh "+ listMoneySend.size());
+                        System.out.println("List size "+ listMoneySend.size());
                         Intent intent = new Intent(getContext(), StaticMoney.class);
                         intent.putExtra("money", (Serializable) listMoneySend);
                         startActivity(intent);
@@ -579,7 +579,7 @@ public class MoneyFragment extends Fragment {
                         for(Money mo : listSpending){
                             incoming += "\t" + mo.getUseType() + ": " + mo.getDescription() + ": " + mo.getMoney() +"\n";
                         }
-                        incoming+="Hiệu số: " + (int) total;
+                        incoming+="Số dư: " + (int) total;
                         attachmentPart.setText(incoming);
                         m.addBodyPart(attachmentPart);
 
@@ -633,7 +633,7 @@ public class MoneyFragment extends Fragment {
                             for(Money mo : listSpending){
                                 incoming += "\t" + mo.getUseType() + ": " + mo.getDescription() + ": " + mo.getMoney() +"\n";
                             }
-                            incoming+="Hiệu số: " + (int) total;
+                            incoming+="Số dư: " + (int) total;
                             attachmentPart.setText(incoming);
                             m.addBodyPart(attachmentPart);
 
@@ -684,7 +684,7 @@ public class MoneyFragment extends Fragment {
                         for(Money mo : listSpending){
                             incoming += "\t" + mo.getUseType() + ": " + mo.getDescription() + ": " + mo.getMoney() +"\n";
                         }
-                        incoming+="Hiệu số: " + (int)total;
+                        incoming+="Số dư: " + (int)total;
                         attachmentPart.setText(incoming);
                         m.addBodyPart(attachmentPart);
 
