@@ -2,6 +2,7 @@ package com.example.semesterprojectnguyentatthangb17dccn563.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,18 @@ public class RecyclerMoneyAdapter extends RecyclerView.Adapter<RecyclerMoneyAdap
     @Override
     public void onBindViewHolder(@NonNull IncomeViewHolder holder, int position) {
         Money mi = listMoney.get(position);
-        holder.money.setText(mi.getMoney());
-        holder.date.setText(mi.getDate());
-        holder.type.setText(mi.getType());
-        holder.useType.setText(mi.getUseType());
+        System.out.println(getItemCount() + " So luong day aaaaaa");
+        String type = mi.getType();
+        if(type.equals("Tiền chi")){
+            holder.money.setTextColor(Color.parseColor("#FFFF4444"));
+            holder.money.setText( "-" + mi.getMoney() + "");
+        }
+        if(type.equals("Tiền thu")){
+            holder.money.setTextColor(Color.parseColor("#FF33B5E5"));
+            holder.money.setText("+" + mi.getMoney());
+        }
+
+        holder.type.setText(mi.getUseType());
         holder.description.setText(mi.getDescription());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +76,12 @@ public class RecyclerMoneyAdapter extends RecyclerView.Adapter<RecyclerMoneyAdap
     }
 
     public class  IncomeViewHolder extends RecyclerView.ViewHolder{
-        TextView money, date, type, useType, description;
+        TextView type, description, money;
         public IncomeViewHolder(@NonNull View itemView) {
             super(itemView);
             money = itemView.findViewById(R.id.tvCardMoney);
-            date = itemView.findViewById(R.id.tvCardDate);
             type = itemView.findViewById(R.id.tvCardType);
-            useType = itemView.findViewById(R.id.tvCardUseType);
-            description = itemView.findViewById(R.id.tvCardDescription);
+            description = itemView.findViewById(R.id.tvCardDes);
         }
     }
 }

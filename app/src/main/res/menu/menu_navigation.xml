@@ -7,6 +7,11 @@
         android:icon="@drawable/cashinhan"
         />
     <item
+        android:title="Static"
+        android:id="@+id/naviStatic"
+        android:icon="@drawable/ic_baseline_pie_chart_24"
+        />
+    <item
         android:title="PTIT News"
         android:id="@+id/newsNavi"
         android:icon="@drawable/ic_baseline_web_24"/>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.CircleFragment">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <NumberPicker
+                android:id="@+id/month_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+            </NumberPicker>
+
+            <NumberPicker
+                android:id="@+id/year_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </NumberPicker>
+
+            <Button
+                android:id="@+id/btnViewStatic"
+                android:text="Xem"
+                android:layout_marginLeft="5dp"
+                android:layout_width="65dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btnSendEmail"
+                android:text="Gửi thống kê qua email"
+                android:textSize="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="THỐNG KÊ THEO: "
+                android:textAlignment="center"
+                android:textColor="#EA1313"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spTypeCircle"
+                android:entries="@array/moneyType"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <com.anychart.AnyChartView
+            android:id="@+id/staticChartView"
+            android:layout_width="350dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="10dp"
+            android:layout_height="350dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/revCircle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</FrameLayout>

@@ -45,6 +45,10 @@ public class AddActivityMoney extends AppCompatActivity {
         actionBar.hide();
         init();
 
+        Intent intent = getIntent();
+        if(intent.getStringExtra("date") != null){
+            tvDate.setText(intent.getStringExtra("date"));
+        }
         btnGetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +132,12 @@ public class AddActivityMoney extends AppCompatActivity {
                     finish();
                 }
 
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

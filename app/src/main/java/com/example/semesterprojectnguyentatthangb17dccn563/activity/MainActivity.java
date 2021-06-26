@@ -54,11 +54,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.naviMoney:
                         viewPager.setCurrentItem(0);
                         break;
-                    case R.id.newsNavi:
+                    case R.id.naviStatic:
                         viewPager.setCurrentItem(1);
                         break;
-                    case R.id.moreNavi:
+                    case R.id.newsNavi:
                         viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.moreNavi:
+                        viewPager.setCurrentItem(3);
                         break;
                 }
                 return true;
@@ -78,9 +81,12 @@ public class MainActivity extends AppCompatActivity {
                         bnv.getMenu().findItem(R.id.naviMoney).setChecked(true);
                         break;
                     case 1:
-                        bnv.getMenu().findItem(R.id.newsNavi).setChecked(true);
+                        bnv.getMenu().findItem(R.id.naviStatic).setChecked(true);
                         break;
                     case 2:
+                        bnv.getMenu().findItem(R.id.newsNavi).setChecked(true);
+                        break;
+                    case 3:
                         bnv.getMenu().findItem(R.id.moreNavi).setChecked(true);
                         break;
                 }
